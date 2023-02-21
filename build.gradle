@@ -16,6 +16,19 @@ java {
     }
 }
 
+def os = System.getProperty('os.name').toLowerCase().split()[0];
+println "os: ${os}"
+
+def j2v8ArtifactId
+
+if (os == 'windows') {
+    j2v8ArtifactId = 'j2v8_win32_x86_64'
+} else if (os == 'linux') {
+    j2v8ArtifactId = 'j2v8_linux_x86_64'
+} else {
+    j2v8ArtifactId = 'j2v8_macosx_x86_64'
+}
+
 dependencies {
     // Nashorn script engine
     implementation 'org.openjdk.nashorn:nashorn-core:15.4'
@@ -26,8 +39,8 @@ dependencies {
     // GraalJS script engine
     implementation 'org.graalvm.js:js:22.3.1'
 
-    // J2V8 for windows engine
-    implementation 'com.eclipsesource.j2v8:j2v8_win32_x86_64:4.6.0'
+    // J2V8
+    implementation "com.eclipsesource.j2v8:${j2v8ArtifactId}:4.6.0"
 }
 
 tasks.register('runWithGraalJIT', JavaExec) {
