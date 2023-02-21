@@ -1,5 +1,8 @@
 name: Benchmarking
 
+on:
+  workflow_dispatch:
+
 jobs:
   benchmarking:
     steps:
