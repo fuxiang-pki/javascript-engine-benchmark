@@ -46,13 +46,24 @@ dependencies {
 tasks.register('runWithGraalJIT', JavaExec) {
     mainClass.set('org.example.App')
     classpath = sourceSets.main.runtimeClasspath
-    jvmArgs(
-            "-XX:+UnlockExperimentalVMOptions",
-            "-XX:+EnableJVMCI",
-            "-XX:+UseJVMCICompiler",
-            "--upgrade-module-path=./jit/compiler-22.3.1.jar;./jit/compiler-management-22.3.1.jar",
-            "--module-path=./jit/graal-sdk-22.3.1.jar;./jit/truffle-api-22.3.1.jar"
-    )
+
+    if (os == 'windows') {
+        jvmArgs(
+                "-XX:+UnlockExperimentalVMOptions",
+                "-XX:+EnableJVMCI",
+                "-XX:+UseJVMCICompiler",
+                "--upgrade-module-path=./jit/compiler-22.3.1.jar;./jit/compiler-management-22.3.1.jar",
+                "--module-path=./jit/graal-sdk-22.3.1.jar;./jit/truffle-api-22.3.1.jar"
+        )
+    } else {
+        jvmArgs(
+                "-XX:+UnlockExperimentalVMOptions",
+                "-XX:+EnableJVMCI",
+                "-XX:+UseJVMCICompiler",
+                "--upgrade-module-path=./jit/compiler-22.3.1.jar:./jit/compiler-management-22.3.1.jar",
+                "--module-path=./jit/graal-sdk-22.3.1.jar:./jit/truffle-api-22.3.1.jar"
+        )
+    }
 }
 
 tasks.register('run', JavaExec) {
