@@ -31,3 +31,6 @@ On Windows, use:
 ```bash
 ./gradlew.bat runWithGraalJIT
 ```
+
+If you prefer not to run the benchmark on your local machine, 
+you can fork this repository and run it using GitHub Actions.
