@@ -1,6 +1,8 @@
 package org.example;
 
 import com.eclipsesource.v8.V8;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import org.graalvm.polyglot.Context;
 import org.graalvm.polyglot.Value;
 import javax.script.ScriptEngineManager;
@@ -72,6 +74,7 @@ public class App {
       """;
 
   public static void main(String[] args) throws Exception {
+    System.out.println();
     benchGraalPolyglotContext();
     benchGraalScriptEngine();
     benchNashornScriptEngine();
@@ -100,9 +103,10 @@ public class App {
     return sum;
   }
 
-  static long benchJ2V8() {
+  static long benchJ2V8() throws IOException {
     System.out.println("=== J2V8 via com.eclipsesource.v8.V8 runtime ===");
-    V8 v8Runtime = V8.createV8Runtime();
+    Path libPath = Files.createTempDirectory("j2v8");
+    V8 v8Runtime = V8.createV8Runtime("j2v8", libPath.toString());
     long sum = 0;
     try {
       System.out.println("warming up ...");
