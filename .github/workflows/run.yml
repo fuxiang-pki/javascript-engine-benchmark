@@ -28,6 +28,8 @@ jobs:
       - name: Benchmarking on Java 17
         run: |
           chmod +x gradlew
+          ls -l jit
+          chmod +x jit/*.jar
           ./gradlew run
 
       - name: Benchmarking on Java 17 with Graal JIT
